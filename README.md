@@ -1,4 +1,4 @@
-# skjutsgruppen-infra
+# Skjutsgruppen Infra
 
 This repo describes setup and maintenance of the hosting platform behind Skjutsgruppen.
 
@@ -27,6 +27,21 @@ The cluster is currently running on two instances. 2 vCPU, 4 GB RAM and 40 GB di
 After setting up a new server, SSH into it and apply the following configuration.
 
 ```shell
+apt update
+apt -y upgrade
+apy -y insatll open-iscsi
+systemctl enable --now iscsid
+
+adduser skjutsgruppen --disabled-password
+usermod -a -G sudo skjutsgruppen
+visudo # Change the %sudo line to this:
+# %sudo   ALL=(ALL) NOPASSWD:ALL
+
+su - skjutsgruppen
+mkdir .ssh
+touch .ssh/authorized_keys
+# Add SSH keys to .ssh/authorized_keys
+
 
 ```
 
@@ -85,4 +100,18 @@ curl -sfL https://get.k3s.io | sh -
 
 # Enable the k3s-agent
 sudo systemctl enable --now k3s-agent
+```
+
+#### Install dependencies
+
+We are running a few cluster-wide dependencies that are in charge of different functionality. These are installed by running `skaffold run` in this repository.
+
+- **cert-manager** provides easy SSL certificate management with Letsencrypt
+- **ingress-nginx** terminates HTTPS traffic and routes incoming requests to the correct service
+- **longhorn** provides a cluster-wide storage
+
+Once longhorn is installed you will have two default storage classes and you want to disable the one called _local-path_.
+
+```shell
+kubectl patch storageclass local-path -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
 ```
