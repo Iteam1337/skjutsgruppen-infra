@@ -1,0 +1,31 @@
+apiVersion: skaffold/v4beta2
+kind: Config
+metadata:
+  name: default-cluster
+
+deploy:
+  helm:
+      releases:
+      # don't forget to uninstall traefik and traefik-crd in kube-system namespace if you have them
+      - name: ingress-nginx
+        remoteChart: ingress-nginx
+        repo: https://kubernetes.github.io/ingress-nginx
+        createNamespace: true
+        namespace: ingress-nginx
+      - name: cert-manager
+        remoteChart: cert-manager
+        repo: https://charts.jetstack.io
+        setValues:
+          installCRDs: true
+        createNamespace: true
+        namespace: cert-manager
+      - name: longhorn
+        remoteChart: longhorn
+        repo: https://charts.longhorn.io
+        createNamespace: true
+        namespace: longhorn-system
+
+manifests:
+  rawYaml:
+    - https://github.com/jetstack/cert-manager/releases/download/v1.5.3/cert-manager.crds.yaml
+    - k8s/letsencrypt.yaml
