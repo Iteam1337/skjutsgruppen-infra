@@ -6,24 +6,40 @@ metadata:
 deploy:
   helm:
       releases:
-      # don't forget to uninstall traefik and traefik-crd in kube-system namespace if you have them
-      - name: ingress-nginx
+
+      # Ingress NGINX.
+      - createNamespace: true
+        name: ingress-nginx
+        namespace: ingress-nginx
         remoteChart: ingress-nginx
         repo: https://kubernetes.github.io/ingress-nginx
-        createNamespace: true
-        namespace: ingress-nginx
-      - name: cert-manager
+      
+      # Cert Manager.
+      - createNamespace: true
+        name: cert-manager
+        namespace: cert-manager
         remoteChart: cert-manager
         repo: https://charts.jetstack.io
         setValues:
           installCRDs: true
-        createNamespace: true
-        namespace: cert-manager
-      - name: longhorn
+
+      # Longhorn.
+      - createNamespace: true
+        name: longhorn
+        namespace: longhorn-system
         remoteChart: longhorn
         repo: https://charts.longhorn.io
-        createNamespace: true
-        namespace: longhorn-system
+
+      # PostgreSQL.
+      - createNamespace: true
+        name: postgres
+        namespace: postgres
+        remoteChart: postgresql
+        repo: https://charts.bitnami.com/bitnami
+        setValues:
+          primary:
+            persistence:
+              size: 20Gi
 
 manifests:
   rawYaml:
