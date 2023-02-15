@@ -120,3 +120,14 @@ Once longhorn is installed you will have two default storage classes and you wan
 ```shell
 kubectl patch storageclass local-path -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
 ```
+
+##### Longhorn backup
+
+```shell
+kubectl create secret generic backup-secret \
+  --from-literal=AWS_ACCESS_KEY_ID="<key-id>" \
+  --from-literal=AWS_SECRET_ACCESS_KEY="<access-key>" \
+  --from-literal=AWS_ENDPOINTS=https://objects.dc-fbg1.glesys.net
+```
+
+Configure longhorn to use `s3://bucket-name@objects/` replacing _bucket-name_ with the name of your bucket and `backup-secret`.
