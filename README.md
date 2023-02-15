@@ -6,6 +6,11 @@ This repo describes setup and maintenance of the hosting platform behind Skjutsg
 
 - [ ] Move the repo to the correct GitHub organisation
 - [ ] Rename the repo to vkicks-infra
+- [ ] Setup firewall rules
+- [ ] Setup longhorn backups
+- [ ] Create an SSH key and save in vault
+- [ ] Setup automated build + deploy
+- [ ] Create LICENSE
 
 ## Contributing
 
