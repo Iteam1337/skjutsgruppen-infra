@@ -1,6 +1,11 @@
-# Skjutsgruppen Infra
+# VKICKS Infra
 
 This repo describes setup and maintenance of the hosting platform behind Skjutsgruppen.
+
+# TODO
+
+- [ ] Move the repo to the correct GitHub organisation
+- [ ] Rename the repo to vkicks-infra
 
 ## Contributing
 
