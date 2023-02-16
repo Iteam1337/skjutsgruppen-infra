@@ -69,6 +69,8 @@ Allow incoming traffic from other servers in the cluster on these ports:
 - 8472 (UDP)
 - 10250-10259 (TCP)
 
+See [K3s documentation](https://docs.k3s.io/installation/requirements#networking) if you want to learn more about the ports.
+
 ### Kubernetes cluster
 
 #### Setup master node
