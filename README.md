@@ -6,7 +6,7 @@ This repo describes setup and maintenance of the hosting platform behind Skjutsg
 
 - [ ] Move the repo to the correct GitHub organisation
 - [ ] Rename the repo to vkicks-infra
-- [ ] Setup firewall rules
+- [x] Setup firewall rules
 - [ ] Setup longhorn backups
 - [x] Create an SSH key and save in vault
 - [x] Setup automated build + deploy
@@ -51,9 +51,23 @@ su - skjutsgruppen
 mkdir .ssh
 touch .ssh/authorized_keys
 # Add SSH keys to .ssh/authorized_keys
-
-
 ```
+
+### Firewall rules
+
+Allow incoming traffic from all origins on the following ports:
+
+- 22 (TCP)
+- 80 (TCP)
+- 443 (TCP)
+- 6443 (TCP)
+- 30000-32767 (TCP)
+
+Allow incoming traffic from other servers in the cluster on these ports:
+
+- 2379-2380 (TCP)
+- 8472 (UDP)
+- 10250-10259 (TCP)
 
 ### Kubernetes cluster
 
