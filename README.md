@@ -152,3 +152,25 @@ kubectl create secret generic backup-secret \
 ```
 
 Configure longhorn to use `s3://bucket-name@objects/` replacing _bucket-name_ with the name of your bucket and `backup-secret`.
+
+##### Database admin
+
+```shell
+kubectl -n pgadmin create secret generic pgadmin \
+  --from-literal=PGADMIN_DEFAULT_EMAIL="someone@domain" \
+  --from-literal=PGADMIN_DEFAULT_PASSWORD="superSecret"
+```
+
+Create a `servers.json` file according to the [pgAdmin documentation](https://www.pgadmin.org/docs/pgadmin4/latest/import_export_servers.html#json-format) and fill out the values for the PostgreSQL database.
+
+Then create a configmap called pgadmin from it.
+
+```shell
+kubectl create configmap pgadmin --from-file servers.json
+```
+
+Finally, setup the pgAdmin deployment.
+
+```shell
+kubectl apply -f k8s/pgAdmin.yaml
+```
